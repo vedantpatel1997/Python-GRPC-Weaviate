@@ -1,0 +1,24 @@
+# PowerShell script to run Weaviate container with gRPC and REST enabled
+
+docker pull cr.weaviate.io/semitechnologies/weaviate:latest
+
+docker run -d `
+  -p 8080:8080 `  # REST API
+  -p 50051:50051 `  # gRPC
+  -e QUERY_DEFAULTS_LIMIT=25 `
+  -e AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true `
+  -e PERSISTENCE_DATA_PATH=/var/lib/weaviate `
+  -e ENABLE_API_BASED_MODULES=true `
+  -e CLUSTER_HOSTNAME=node1 `
+  cr.weaviate.io/semitechnologies/weaviate:latest
+
+ docker tag cr.weaviate.io/semitechnologies/weaviate:latest libraryacr.azurecr.io/python-grpc-weaviate:latest
+
+ az acr login --name libraryacr   
+ docker push libraryacr.azurecr.io/python-grpc-weaviate:latest    
+
+
+ // To test locally                             
+git clone https://github.com/weaviate/weaviate
+cd weaviate
+protoc --python_out=. --grpc_python_out=. -I. ./proto/v1/weaviate.proto
