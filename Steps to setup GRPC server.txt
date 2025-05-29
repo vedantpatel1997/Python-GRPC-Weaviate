@@ -1,4 +1,7 @@
+https://weaviate.io/developers/weaviate/connections/connect-cloud
+
 # PowerShell script to run Weaviate container with gRPC and REST enabled
+
 
 docker pull cr.weaviate.io/semitechnologies/weaviate:latest
 
